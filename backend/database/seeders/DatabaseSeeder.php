@@ -70,7 +70,7 @@ class DatabaseSeeder extends Seeder
 
         // ── Requests ──────────────────────────────────────────────────────────
         // 1. Draft viaticos (Osmar)
-        ViaticosRequest::create([
+        ViaticosRequest::updateOrCreate([
             'folio'             => 'VIA-2024-089',
             'user_id'           => $osmar->id,
             'assigned_approver_id' => $approver->id,
@@ -90,7 +90,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         // 2. Approved payment (Laura)
-        $req2 = ViaticosRequest::create([
+        $req2 = ViaticosRequest::updateOrCreate([
             'folio'             => 'PAG-2024-041',
             'user_id'           => $laura->id,
             'assigned_approver_id' => $approver->id,
@@ -103,7 +103,7 @@ class DatabaseSeeder extends Seeder
             'resolved_at'       => now()->subDays(1),
         ]);
 
-        Approval::create([
+        Approval::updateOrCreate([
             'request_id'  => $req2->id,
             'approver_id' => $approver->id,
             'action'      => 'approved',
@@ -114,7 +114,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         // 3. Rejected viaticos (Osmar)
-        $req3 = ViaticosRequest::create([
+        $req3 = ViaticosRequest::updateOrCreate([
             'folio'             => 'VIA-2024-082',
             'user_id'           => $osmar->id,
             'assigned_approver_id' => $approver->id,
@@ -130,7 +130,7 @@ class DatabaseSeeder extends Seeder
             'resolved_at'       => now()->subDays(6),
         ]);
 
-        Approval::create([
+        Approval::updateOrCreate([
             'request_id'  => $req3->id,
             'approver_id' => $approver->id,
             'action'      => 'rejected',
@@ -141,7 +141,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         // ── Sample Notifications ───────────────────────────────────────────────
-        AppNotification::create([
+        AppNotification::updateOrCreate([
             'id'         => (string) Str::uuid(),
             'user_id'    => $osmar->id,
             'request_id' => $req3->id,
@@ -151,7 +151,7 @@ class DatabaseSeeder extends Seeder
             'read'       => false,
         ]);
 
-        AppNotification::create([
+        AppNotification::updateOrCreate([
             'id'         => (string) Str::uuid(),
             'user_id'    => $approver->id,
             'request_id' => null,
