@@ -16,49 +16,57 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         // ── Users ─────────────────────────────────────────────────────────────
-        $admin = User::updateOrCreate([
+        $admin = User::updateOrCreate(
+        ['email' => 'admin@olam.com'],
+        [
             'name'          => 'Administrador OFI',
-            'email'         => 'admin@olam.com',
             'password'      => Hash::make('password'),
             'role'          => 'admin',
             'department'    => 'TI',
             'position'      => 'Administrador del Sistema',
             'employee_code' => 'EMP-0001',
             'is_active'     => true,
-        ]);
+        ]
+    );
 
-        $approver = User::updateOrCreate([
+    $approver = User::updateOrCreate(
+        ['email' => 'gerente.finanzas@olam.com'],
+        [
             'name'          => 'Gerente Finanzas',
-            'email'         => 'gerente.finanzas@olam.com',
             'password'      => Hash::make('password'),
             'role'          => 'approver',
             'department'    => 'Finanzas',
             'position'      => 'Gerente de Finanzas',
             'employee_code' => 'EMP-0002',
             'is_active'     => true,
-        ]);
+        ]
+    );
 
-        $osmar = User::updateOrCreate([
+    $osmar = User::updateOrCreate(
+        ['email' => 'osmar@olam.com'],
+        [
             'name'          => 'Osmar Gómez',
-            'email'         => 'osmar@olam.com',
             'password'      => Hash::make('password'),
             'role'          => 'user',
             'department'    => 'Contabilidad',
             'position'      => 'Contador',
             'employee_code' => 'EMP-0010',
             'is_active'     => true,
-        ]);
+        ]
+    );
 
-        $laura = User::updateOrCreate([
+    $laura = User::updateOrCreate(
+        ['email' => 'laura@olam.com'],
+        [
             'name'          => 'Laura Pérez',
-            'email'         => 'laura@olam.com',
             'password'      => Hash::make('password'),
             'role'          => 'user',
             'department'    => 'Ventas',
             'position'      => 'Ejecutiva de Ventas',
             'employee_code' => 'EMP-0011',
             'is_active'     => true,
-        ]);
+        ]
+    );
 
         // ── Requests ──────────────────────────────────────────────────────────
         // 1. Draft viaticos (Osmar)
