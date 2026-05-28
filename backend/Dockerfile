@@ -1,4 +1,4 @@
-FROM php:8.2-cli
+FROM php:8.2-apache
 
 RUN apt-get update && apt-get install -y \
     git \
@@ -9,18 +9,18 @@ RUN apt-get update && apt-get install -y \
 
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
-WORKDIR /app
+WORKDIR /var/www/html
 
-COPY . /app
+COPY . .
 
-RUN mkdir -p bootstrap/cache \
+RUN mkdir -p \
+    bootstrap/cache \
     storage/framework/cache \
     storage/framework/sessions \
     storage/framework/views \
-    resources/views \
-    && chmod -R 775 storage bootstrap/cache
+    storage/logs \
+    resources/views
 
-RUN touch database/database.sqlite || true
 RUN chmod -R 777 storage bootstrap/cache
 
 RUN composer install --no-dev --optimize-autoloader
@@ -30,8 +30,13 @@ RUN php artisan route:clear || true
 RUN php artisan cache:clear || true
 RUN php artisan view:clear || true
 
-EXPOSE 8080
+RUN a2enmod rewrite
+
+RUN sed -i 's!/var/www/html!/var/www/html/public!g' \
+    /etc/apache2/sites-available/000-default.conf
+
+EXPOSE 80
 
 CMD php artisan migrate --force && \
     php artisan db:seed --force && \
-    exec php artisan serve --host=0.0.0.0 --port=${PORT}
+    apache2-foreground

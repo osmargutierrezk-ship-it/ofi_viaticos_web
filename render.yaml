@@ -45,9 +45,6 @@ services:
           name: ofi-db
           property: host
 
-      - key: PORT
-        value: 10000
-
       - key: DB_PORT
         fromDatabase:
           name: ofi-db
