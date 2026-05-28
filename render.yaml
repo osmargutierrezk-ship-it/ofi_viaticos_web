@@ -27,7 +27,7 @@ services:
       # Leave this unset; docker-entrypoint.sh calls `php artisan key:generate`
       # on first boot which always produces a valid key.
       - key: APP_KEY
-        sync: false
+        value: base64:MRyC76s3Oe5xI29KFFzqox9AV08/BZWEieLtvi0nM+c=
 
       # Render's `host` property returns just the hostname (no scheme).
       # APP_URL must be a full URL, so we hardcode the https:// scheme.
