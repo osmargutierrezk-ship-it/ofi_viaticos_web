@@ -16,7 +16,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         // ── Users ─────────────────────────────────────────────────────────────
-        $admin = User::create([
+        $admin = User::updateOrCreate([
             'name'          => 'Administrador OFI',
             'email'         => 'admin@olam.com',
             'password'      => Hash::make('password'),
@@ -27,7 +27,7 @@ class DatabaseSeeder extends Seeder
             'is_active'     => true,
         ]);
 
-        $approver = User::create([
+        $approver = User::updateOrCreate([
             'name'          => 'Gerente Finanzas',
             'email'         => 'gerente.finanzas@olam.com',
             'password'      => Hash::make('password'),
@@ -38,7 +38,7 @@ class DatabaseSeeder extends Seeder
             'is_active'     => true,
         ]);
 
-        $osmar = User::create([
+        $osmar = User::updateOrCreate([
             'name'          => 'Osmar Gómez',
             'email'         => 'osmar@olam.com',
             'password'      => Hash::make('password'),
@@ -49,7 +49,7 @@ class DatabaseSeeder extends Seeder
             'is_active'     => true,
         ]);
 
-        $laura = User::create([
+        $laura = User::updateOrCreate([
             'name'          => 'Laura Pérez',
             'email'         => 'laura@olam.com',
             'password'      => Hash::make('password'),
