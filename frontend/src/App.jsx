@@ -167,20 +167,21 @@ const Sidebar = ({ currentPage, setPage, collapsed, setCollapsed }) => {
       boxShadow:"4px 0 24px rgba(0,0,0,.18)"
     }}>
       {/* Logo */}
-      <div style={{ padding: collapsed ? "24px 16px" : "24px 20px", borderBottom:"1px solid rgba(255,255,255,.08)", flexShrink:0 }}>
-        {!collapsed ? (
-          <div style={{ display:"flex", alignItems:"center", gap:8 }}>
-            <div style={{ width:40, height:40, borderRadius:10, background:"linear-gradient(135deg,#7C3AED,#EA580C)", display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0, fontSize:16, fontWeight:900, color:"#fff", letterSpacing:-1 }}>
-              ofi
-            </div>
-            <div>
-              <div style={{ color:"#fff", fontWeight:800, fontSize:16, lineHeight:1.1 }}>OFI</div>
-              <div style={{ color:"rgba(255,255,255,.45)", fontSize:10, fontWeight:500 }}>make it real</div>
-            </div>
-          </div>
-        ) : (
-          <div style={{ width:32, height:32, borderRadius:8, background:"linear-gradient(135deg,#7C3AED,#EA580C)", display:"flex", alignItems:"center", justifyContent:"center", fontSize:11, fontWeight:900, color:"#fff" }}>ofi</div>
-        )}
+      <div style={{
+        padding: collapsed ? "24px 16px" : "24px 20px",
+        borderBottom: "1px solid rgba(255,255,255,.08)",
+        flexShrink: 0
+      }}>
+        <img
+          src="logo.png"
+          alt="OFI Logo"
+          style={{
+            width: collapsed ? 32 : 140,
+            height: collapsed ? 32 : 48,
+            objectFit: "contain",
+            display: "block"
+          }}
+        />
       </div>
 
       {/* Nav */}

@@ -40,7 +40,7 @@ self.addEventListener('push', (event) => {
   const options = {
     body,
     icon: '/assets/logo.png',
-    badge: '/assets/badge.png',  // 96×96 monochrome icon for Android
+    badge: '/assets/logo.png',  // 96×96 monochrome icon for Android
     tag: data.notificationId || 'ofi-notif',
     renotify: true,
     requireInteraction: false,
