@@ -16,6 +16,9 @@ COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 WORKDIR /app
 COPY . .
 
+RUN mkdir -p bootstrap/cache storage/framework/cache storage/framework/sessions storage/framework/views \
+    && chmod -R 775 storage bootstrap/cache
+
 # Instalar dependencias de Laravel
 RUN composer install --no-dev --optimize-autoloader
 
