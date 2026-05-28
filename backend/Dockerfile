@@ -1,7 +1,5 @@
-# Imagen base con PHP y extensiones necesarias
 FROM php:8.2-cli
 
-# Instalar dependencias del sistema
 RUN apt-get update && apt-get install -y \
     git \
     unzip \
@@ -9,28 +7,28 @@ RUN apt-get update && apt-get install -y \
     libzip-dev \
     && docker-php-ext-install pdo pdo_pgsql zip
 
-# Instalar Composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
-# Copiar archivos del proyecto
 WORKDIR /app
-COPY . .
 
-RUN mkdir -p bootstrap/cache storage/framework/cache storage/framework/sessions storage/framework/views \
+COPY . /app
+
+RUN mkdir -p bootstrap/cache \
+    storage/framework/cache \
+    storage/framework/sessions \
+    storage/framework/views \
+    resources/views \
     && chmod -R 775 storage bootstrap/cache
 
-# Instalar dependencias de Laravel
 RUN composer install --no-dev --optimize-autoloader
 
-# Permisos
-RUN chmod -R 775 storage bootstrap/cache
+RUN php artisan config:clear || true
+RUN php artisan route:clear || true
+RUN php artisan cache:clear || true
+RUN php artisan view:clear || true
 
-# Exponer puerto
 EXPOSE 8080
 
-# Comando de inicio
 CMD php artisan migrate --force && \
     php artisan db:seed --force && \
-    php artisan config:cache && \
-    php artisan route:cache && \
     php -S 0.0.0.0:${PORT:-8080} -t public
