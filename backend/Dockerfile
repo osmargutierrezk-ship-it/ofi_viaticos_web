@@ -20,6 +20,9 @@ RUN mkdir -p bootstrap/cache \
     resources/views \
     && chmod -R 775 storage bootstrap/cache
 
+RUN touch database/database.sqlite || true
+RUN chmod -R 777 storage bootstrap/cache
+
 RUN composer install --no-dev --optimize-autoloader
 
 RUN php artisan config:clear || true
@@ -31,4 +34,4 @@ EXPOSE 8080
 
 CMD php artisan migrate --force && \
     php artisan db:seed --force && \
-    php -S 0.0.0.0:${PORT:-8080} -t public
+    php -S 0.0.0.0:${PORT:-8080} public/index.php
