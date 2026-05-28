@@ -22,8 +22,12 @@ services:
       - key: APP_DEBUG
         value: false
 
+      # Do NOT use generateValue: Render's random string lacks the "base64:" prefix
+      # and correct 32-byte length that Laravel's Encrypter requires.
+      # Leave this unset; docker-entrypoint.sh calls `php artisan key:generate`
+      # on first boot which always produces a valid key.
       - key: APP_KEY
-        generateValue: true
+        sync: false
 
       # Render's `host` property returns just the hostname (no scheme).
       # APP_URL must be a full URL, so we hardcode the https:// scheme.
