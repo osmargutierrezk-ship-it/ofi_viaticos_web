@@ -29,8 +29,7 @@ RUN chmod -R 775 storage bootstrap/cache
 EXPOSE 8080
 
 # Comando de inicio
-CMD php artisan key:generate --force && \
-    php artisan migrate --seed --force && \
+CMD php artisan migrate --seed --force && \
     php artisan config:cache && \
     php artisan route:cache && \
     php artisan view:cache && \
