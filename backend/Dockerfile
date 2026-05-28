@@ -26,16 +26,17 @@ RUN chmod -R 777 storage bootstrap/cache
 
 RUN composer install --no-dev --optimize-autoloader
 
-RUN php artisan config:clear || true
-RUN php artisan route:clear || true
-RUN php artisan cache:clear || true
-RUN php artisan view:clear || true
-
+# Enable Apache rewrite module (required for Laravel's .htaccess routing)
 RUN a2enmod rewrite
 
-# Point Apache DocumentRoot to Laravel's public/ directory
+# Configure the default vhost:
+#   - DocumentRoot → Laravel's public/ directory
+#   - AllowOverride All  → .htaccess is honoured (needed for mod_rewrite)
 RUN sed -i 's!/var/www/html!/var/www/html/public!g' \
-    /etc/apache2/sites-available/000-default.conf
+        /etc/apache2/sites-available/000-default.conf && \
+    # Append a Directory block that explicitly allows .htaccess overrides
+    printf '\n<Directory /var/www/html/public>\n    AllowOverride All\n    Require all granted\n</Directory>\n' \
+        >> /etc/apache2/sites-available/000-default.conf
 
 # Suppress the "ServerName" warning
 RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
@@ -44,8 +45,7 @@ RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
-# Render sets PORT=8080; Apache must listen on that port at runtime
-# We use an entrypoint script to configure this dynamically
+# Render sets PORT=8080; Apache is configured at runtime by the entrypoint
 EXPOSE 8080
 
 CMD ["/usr/local/bin/docker-entrypoint.sh"]
