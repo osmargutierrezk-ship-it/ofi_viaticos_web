@@ -34,4 +34,4 @@ EXPOSE 8080
 
 CMD php artisan migrate --force && \
     php artisan db:seed --force && \
-    php -S 0.0.0.0:${PORT:-8080} public/index.php
+    exec php artisan serve --host=0.0.0.0 --port=${PORT}
