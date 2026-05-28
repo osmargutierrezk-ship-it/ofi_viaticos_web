@@ -9,8 +9,7 @@ databases:
 services:
   - type: web
     name: ofi-backend
-    runtime: php
-    region: oregon
+    runtime: docker
     plan: free
     rootDir: backend
     buildCommand: |
