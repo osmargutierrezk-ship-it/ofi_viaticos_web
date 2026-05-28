@@ -534,7 +534,7 @@ const FileUploadZone = ({ files, setFiles }) => {
 const ViaticosPage = ({ addToast }) => {
   const [step, setStep] = useState(1);
   const [files, setFiles] = useState([]);
-  const [recibioCanticipo, setRecibioCAnticipo] = useState(true);
+  const [recibioCAnticipo, setRecibioCAnticipo] = useState(true);
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [form, setForm] = useState({
     destino:"Monterrey, Nuevo León",
